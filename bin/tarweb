@@ -1,0 +1,26 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use 5.020;
+use lib::findbin '../lib'; # dev-only
+use experimental qw( signatures postderef );
+use App::tarweb;
+
+# PODNAME: tarweb
+# ABSTRACT: Convert cpan distribution from BackPAN to a git repository
+# VERSION
+
+=head1 SYNOPSIS
+
+Starts a HTTP server locally, and opens it in your web browser
+
+ $ tarweb foo.tar.gz
+
+=head1 DESCRIPTION
+
+=head1 SEE ALSO
+
+=cut
+
+exit App::tarweb->main(@ARGV);
