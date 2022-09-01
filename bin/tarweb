@@ -8,7 +8,7 @@ use experimental qw( signatures postderef );
 use App::tarweb;
 
 # PODNAME: tarweb
-# ABSTRACT: Convert cpan distribution from BackPAN to a git repository
+# ABSTRACT: Open an archive file in your web browser!
 # VERSION
 
 =head1 SYNOPSIS
