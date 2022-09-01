@@ -1,6 +1,6 @@
 # tarweb ![static](https://github.com/uperl/App-tarweb/workflows/static/badge.svg) ![linux](https://github.com/uperl/App-tarweb/workflows/linux/badge.svg)
 
-Convert cpan distribution from BackPAN to a git repository
+Open an archive file in your web browser!
 
 # SYNOPSIS
 
