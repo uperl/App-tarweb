@@ -23,4 +23,4 @@ Starts a HTTP server locally, and opens it in your web browser
 
 =cut
 
-exit App::tarweb->main(@ARGV);
+exit App::tarweb->new->main(@ARGV);
