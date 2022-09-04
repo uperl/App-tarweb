@@ -7,8 +7,10 @@ use experimental qw( signatures postderef );
 use Browser::Start qw( open_url );
 use Plack::Runner;
 use Plack::App::Libarchive;
+use Plack::App::File;
 use IO::Socket::INET;
 use Path::Tiny qw( path );
+use File::ShareDir::Dist qw( dist_share );
 use URI;
 use Plack::Builder ();
 
@@ -51,7 +53,7 @@ sub main ($self, @ARGV)
   if(@ARGV == 0)
   {
     say STDERR "no archive file given!";
-    exit 2;
+    return 2;
   }
 
   my @paths;
@@ -83,6 +85,16 @@ sub main ($self, @ARGV)
     my %dedupe;
 
     $app = Plack::Builder->new;
+
+    $app->mount("/favicon.ico" => sub ($env) {
+      $DB::single = 1;
+      my $res = [ 200, [ 'Content-Type' => 'image/vnd.microsoft.icon' ], [ '' ] ];
+      $res->[2]->[0] = path(dist_share(__PACKAGE__))->child('favicon.ico')->slurp_raw;
+      push $res->[1]->@*, 'Content-Length' => length $res->[2]->[0];
+      return $res;
+    });
+    $dedupe{"favicon.ico"} = 1;
+
     foreach my $fspath (map { path($_) } @ARGV)
     {
       if(-r $fspath)

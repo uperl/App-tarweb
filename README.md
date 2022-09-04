@@ -7,12 +7,21 @@ Open an archive file in your web browser!
 Starts a HTTP server locally, and opens it in your web browser
 
 ```
-$ tarweb foo.tar.gz
+$ tarweb [ options ] foo.tar.gz
 ```
 
 # DESCRIPTION
 
+This is a hybrid CLI/Web app that opens an archive in your browser
+so that you can browse the content.  Internally it uses
+[libarchive](https://libarchive.org), so any format it supports is
+supported by this application.
+
 # SEE ALSO
+
+- [Plack::App::Libarchive](https://metacpan.org/pod/Plack::App::Libarchive)
+- [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive)
+- [https://libarchive.org](https://libarchive.org)
 
 # AUTHOR
 

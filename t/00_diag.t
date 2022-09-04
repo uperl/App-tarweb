@@ -12,11 +12,15 @@ my $post_diag;
 BEGIN { eval q{ use EV; } }
 $modules{$_} = $_ for qw(
   Browser::Start
+  Capture::Tiny
   EV
   ExtUtils::MakeMaker
+  File::ShareDir::Dist
+  File::ShareDir::Install
   HTTP::Request::Common
   Mojo::DOM58
   Path::Tiny
+  Plack::App::File
   Plack::App::Libarchive
   Plack::Builder
   Plack::Runner
