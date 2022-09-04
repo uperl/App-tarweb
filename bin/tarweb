@@ -24,6 +24,11 @@ so that you can browse the content.  Internally it uses
 L<libarchive|https://libarchive.org>, so any format it supports is
 supported by this application.
 
+This command accepts that same options as L<plackup>.  Unlike
+L<plackup> if you do not specify a port, a random port will
+be used instead of using port C<5000> so that multiple instances
+of this app can run at the same time.
+
 =head1 SEE ALSO
 
 =over 4
