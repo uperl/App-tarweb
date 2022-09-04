@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>[% archive.name %]</title>
+    <title>[% IF archive %][% archive.name %][% ELSE %][% title %][% END %]</title>
     <style>
       a {
         text-decoration: none;
@@ -74,7 +74,7 @@
   <body>
     <div class="nx-header-flag-1"></div>
     <div class="nx-header-flag-2"></div>
-    <div class="nx-header-title"><a href="/">🌻</a> [% archive.name %]</div>
+    <div class="nx-header-title"><a href="/">🌻</a> [% IF archive %][% archive.name %][% ELSE %][% title %][% END %]</div>
     [% content %]
     <div class="nx-footer">
       <p>Copyright &copy; 2022 Graham Ollis</p>
