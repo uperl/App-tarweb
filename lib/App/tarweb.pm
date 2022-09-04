@@ -75,10 +75,14 @@ sub main ($self, @ARGV)
 
   my $app;
 
+  my @pa_la_args = (
+    tt_include_path => [dist_share(__PACKAGE__)],
+  );
+
   if(@ARGV == 1)
   {
     @paths = ('/');
-    $app = Plack::App::Libarchive->new( archive => $ARGV[0] );
+    $app = Plack::App::Libarchive->new( archive => $ARGV[0], @pa_la_args );
   }
   else # @ARGV > 1
   {
@@ -115,7 +119,7 @@ sub main ($self, @ARGV)
         }
 
         push @paths, "/$path/";
-        $app->mount( "/$path/" => Plack::App::Libarchive->new( archive => $fspath )->to_app );
+        $app->mount( "/$path/" => Plack::App::Libarchive->new( archive => $fspath, @pa_la_args )->to_app );
       }
       else
       {
