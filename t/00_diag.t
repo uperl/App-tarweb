@@ -9,10 +9,22 @@ eval { require 'Test/More.pm' };
 my %modules;
 my $post_diag;
 
+BEGIN { eval q{ use EV; } }
 $modules{$_} = $_ for qw(
+  Browser::Start
+  EV
   ExtUtils::MakeMaker
+  HTTP::Request::Common
+  Mojo::DOM58
+  Path::Tiny
+  Plack::App::Libarchive
+  Plack::Builder
+  Plack::Runner
+  Test2::Tools::DOM
+  Test2::Tools::HTTP
   Test2::V0
   Test::Script
+  URI
 );
 
 

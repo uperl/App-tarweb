@@ -2,7 +2,7 @@ package App::tarweb;
 
 use strict;
 use warnings;
-use 5.020;
+use 5.034;
 use experimental qw( signatures postderef );
 use Browser::Start qw( open_url );
 use Plack::Runner;
@@ -102,8 +102,8 @@ sub main ($self, @ARGV)
           $dedupe{$path} = 1;
         }
 
-        push @paths, "/$path";
-        $app->mount( "/$path" => Plack::App::Libarchive->new( archive => $fspath )->to_app );
+        push @paths, "/$path/";
+        $app->mount( "/$path/" => Plack::App::Libarchive->new( archive => $fspath )->to_app );
       }
       else
       {
@@ -116,6 +116,8 @@ sub main ($self, @ARGV)
 
   return 0;
 }
+
+sub _url ($self) { return $self->{url} }
 
 sub _random_port ($)
 {

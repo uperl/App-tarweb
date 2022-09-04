@@ -13,4 +13,5 @@ pod_coverage:
   # format is "Class#method" or "Class",regex allowed
   # for either Class or method.
   private:
+    - App::tarweb#new
     - App::tarweb#main

@@ -15,11 +15,26 @@ use App::tarweb;
 
 Starts a HTTP server locally, and opens it in your web browser
 
- $ tarweb foo.tar.gz
+ $ tarweb [ options ] foo.tar.gz
 
 =head1 DESCRIPTION
 
+This is a hybrid CLI/Web app that opens an archive in your browser
+so that you can browse the content.  Internally it uses
+L<libarchive|https://libarchive.org>, so any format it supports is
+supported by this application.
+
 =head1 SEE ALSO
+
+=over 4
+
+=item L<Plack::App::Libarchive>
+
+=item L<Archive::Libarchive>
+
+=item L<https://libarchive.org>
+
+=back
 
 =cut
 
