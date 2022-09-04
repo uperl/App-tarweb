@@ -17,6 +17,11 @@ so that you can browse the content.  Internally it uses
 [libarchive](https://libarchive.org), so any format it supports is
 supported by this application.
 
+This command accepts that same options as [plackup](https://metacpan.org/pod/plackup).  Unlike
+[plackup](https://metacpan.org/pod/plackup) if you do not specify a port, a random port will
+be used instead of using port `5000` so that multiple instances
+of this app can run at the same time.
+
 # SEE ALSO
 
 - [Plack::App::Libarchive](https://metacpan.org/pod/Plack::App::Libarchive)
