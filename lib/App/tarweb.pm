@@ -6,12 +6,13 @@ use 5.034;
 use experimental qw( signatures postderef );
 use Browser::Start qw( open_url );
 use Plack::Runner;
-use Plack::App::Libarchive;
+use Plack::App::Libarchive 0.02;
 use Plack::App::File;
 use IO::Socket::INET;
 use Path::Tiny qw( path );
 use File::ShareDir::Dist qw( dist_share );
 use URI;
+use Encode qw( encode );
 use Plack::Builder ();
 
 # ABSTRACT: Open an archive file in your web browser!
@@ -91,13 +92,14 @@ sub main ($self, @ARGV)
     $app = Plack::Builder->new;
 
     $app->mount("/favicon.ico" => sub ($env) {
-      $DB::single = 1;
       my $res = [ 200, [ 'Content-Type' => 'image/vnd.microsoft.icon' ], [ '' ] ];
       $res->[2]->[0] = path(dist_share(__PACKAGE__))->child('favicon.ico')->slurp_raw;
       push $res->[1]->@*, 'Content-Length' => length $res->[2]->[0];
       return $res;
     });
     $dedupe{"favicon.ico"} = 1;
+
+    my $tt;
 
     foreach my $fspath (map { path($_) } @ARGV)
     {
@@ -119,21 +121,41 @@ sub main ($self, @ARGV)
         }
 
         push @paths, "/$path/";
-        $app->mount( "/$path/" => Plack::App::Libarchive->new( archive => $fspath, @pa_la_args )->to_app );
+
+        my $subapp = Plack::App::Libarchive->new( archive => $fspath, @pa_la_args );
+
+        $app->mount( "/$path/" => $subapp->to_app );
+
+        $tt ||= $subapp->tt;
       }
       else
       {
         say STDERR "unable to read $fspath, skipping";
       }
     }
+
+    unless($tt)
+    {
+      say STDERR "no archive file given!";
+      return 2;
+    }
+
+    $app->mount("/" => sub ($env) {
+      my $html;
+      $tt->process('index.html.tt', {
+        title    => 'archives',
+        archives => [ sort grep { $_ ne 'favicon.ico' } keys %dedupe ],
+      }, \$html);
+      $html = encode('UTF-8', $html, Encode::FB_CROAK);
+      return [ 200, [ 'Content-Type' => 'text/html; charset=utf-8', 'Content-Length' => length $html ], [ $html ] ];
+    });
+
   }
 
   $runner->run($app->to_app);
 
   return 0;
 }
-
-sub _url ($self) { return $self->{url} }
 
 sub _random_port ($)
 {
